@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     public int multiplier;
     public int scorePerNote = 100;
 
-    public int hitNotes;
-    public int missNotes;
-
     public Text scoreText;
     public Text multiText;
     // Start is called before the first frame update
@@ -24,9 +21,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         currentScore = 0;
         multiplier = 1;
-        hitNotes = 0;
-        missNotes = 0;
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -46,7 +41,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Hit on time");
         currentScore += (scorePerNote * multiplier);
-        hitNotes++;
         multiplier++;
         scoreText.text = "Score: " + currentScore;
         multiText.text = "Multiplier: x" + (multiplier - 1);
@@ -55,7 +49,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Missed");
         multiplier = 1;
-        missNotes++;
         multiText.text = "Multiplier: x" + (multiplier - 1);
     }
 }
