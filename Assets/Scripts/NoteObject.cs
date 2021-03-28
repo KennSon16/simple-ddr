@@ -6,6 +6,8 @@ public class NoteObject : MonoBehaviour
 {
     public bool canBePressed;
     public KeyCode keyToPress;
+    public GameObject hitEffect, goodEffect, perfectEffect, missEffect;
+    public Vector3 effectPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +22,27 @@ public class NoteObject : MonoBehaviour
         {
             if(canBePressed)
             {
+                effectPosition = transform.position;
+                effectPosition.x = 0;
                 gameObject.SetActive(false);
-                GameManager.instance.noteHit();
+                //GameManager.instance.noteHit();
+
+                if(Mathf.Abs(transform.position.y) > 0.25) {
+                    Debug.Log("Hit");
+                    effectPosition.y = 3;
+                    GameManager.instance.NormalHit();
+                    Instantiate(hitEffect, effectPosition, hitEffect.transform.rotation);
+                } else if (Mathf.Abs(transform.position.y) > 0.05f) {
+                    Debug.Log("Good");
+                    effectPosition.y = 4;
+                    GameManager.instance.GoodHit();
+                    Instantiate(goodEffect, effectPosition, goodEffect.transform.rotation);
+                } else {
+                    Debug.Log("Perfect");
+                    effectPosition.y = 5;
+                    GameManager.instance.PerfectHit();
+                    Instantiate(perfectEffect, effectPosition, perfectEffect.transform.rotation);
+                }
 
             }
         }
@@ -42,6 +63,7 @@ public class NoteObject : MonoBehaviour
             {
                 canBePressed = false;
                 GameManager.instance.noteMiss();
+                Instantiate(missEffect, effectPosition, missEffect.transform.rotation);
             }
         }
     }
